@@ -1,0 +1,11 @@
+
+#ifndef SDIZOPROJECT2_MST_H
+#define SDIZOPROJECT2_MST_H
+
+
+class MST {
+
+};
+
+
+#endif //SDIZOPROJECT2_MST_H
