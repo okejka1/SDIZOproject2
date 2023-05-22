@@ -1,3 +1,4 @@
+#include <iostream>
 #include "PriorityQueue.h"
 
 PriorityQueue::PriorityQueue(int nOfEdges) {
@@ -14,51 +15,42 @@ PriorityQueue::Edge PriorityQueue::front() {
 }
 
 void PriorityQueue::push(PriorityQueue::Edge e) {
-    {
-        int i, parent;
+
         size++;
-        i = size-1;                    // insert i to the last index of the heap
-        parent = (i - 1) / 2;
-        // parent index
-
-        // looking for a place to insert e to the heap
-
-        while(i!=0 && (heap[parent].weight > e.weight) )
-        {
-            heap [i] = heap [parent] ;
-            i = parent;
-            parent = (i - 1) / 2;
-        }
-
-        heap[i] = e;                //insertion of an edge to the heap
-    }
-
-}
-
-void PriorityQueue::pop() {
-
-    int i, parent;
-    Edge e;
-
-    if (size) {
-        e = heap[--size];
-
-        i = 0;
-        parent = 1;
-
-        while (parent < size) {
-            if ((parent + 1 < size) && (heap[parent + 1].weight < heap[parent].weight)) parent++;
-            if (e.weight <= heap[parent].weight) break;
-            heap[i] = heap[parent];
-            i = parent;
-            parent = (parent << 1) + 1;
-        }
-
+        int i;
+        i = size - 1;
         heap[i] = e;
 
+        while (i != 0 && heap[parent(i)].weight > heap[i].weight) {
+            swap(heap[i], heap[parent(i)]);
+            i = parent(i);
+
+        }
 
     }
 
+    PriorityQueue::Edge PriorityQueue::pop() {
+
+        if (size == 1) {
+            size--;
+            return heap[0];
+        }
+        Edge root = heap[0];
+        heap[0] = heap[size - 1];
+        size--;
+        heapify(0);
+        return root;
+
+
+    }
+
+
+
+void PriorityQueue::swap(PriorityQueue::Edge &a, PriorityQueue::Edge &b) {
+    Edge temp;
+    temp = a;
+    a = b;
+    b = temp;
 }
 
 int PriorityQueue::parent(int i) {
@@ -72,6 +64,27 @@ int PriorityQueue::left(int i) {
 int PriorityQueue::right(int i) {
     return 2 * i + 2;
 }
+
+void PriorityQueue::heapify(int i) {
+    int l = left(i);
+    int r = right(i);
+    int smallestW = i;
+
+
+    if ((l < size) && (heap[l].weight < heap[i].weight)) {
+        smallestW = l;
+    } else {
+        smallestW = i;
+    }
+    if ((r < size) && (heap[r].weight < heap[smallestW].weight)) {
+        smallestW = r;
+    }
+    if (i != smallestW) {
+        swap(heap[i], heap[smallestW]);
+        heapify(smallestW);
+    }
+}
+
 
 
 

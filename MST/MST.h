@@ -18,10 +18,6 @@ public:
 
     };
 
-//    struct Edge{
-//        int v1, v2, weight;
-//    };
-
     int numOfEdges;
     int numOfVertexes;
 

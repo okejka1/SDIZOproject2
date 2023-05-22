@@ -36,13 +36,13 @@ void Menu::MenuMST() {
                 mst.printMatrix();
                 mst.printList();
                 break;
-            case 2: //
+            case 2: // generating a random graph
                 break;
             case 3: // display of matrix and list
                 mst.printMatrix();
                 mst.printList();
                 break;
-            case 4:
+            case 4: // Prim's algorithm
                 mst.primList();
                 mst.primMatrix();
                 mst.printMatrix();

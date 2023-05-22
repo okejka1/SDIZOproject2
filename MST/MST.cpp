@@ -38,7 +38,7 @@ void MST::loadFromFile(std::string fileName) {
 
                     temp = new Node; // creating new Node to adjacency list -> vertex v1
                     temp->neighbour = v2; // setting a neighbour to v2
-                    temp->next = adjacency_list[v1]; //
+                    temp->next = adjacency_list[v1];
                     temp->weight = weight;
                     adjacency_list[v1] = temp;
 
@@ -95,15 +95,16 @@ void MST::printList() {
 
 void MST::primList() {
 
-    PriorityQueue pq(numOfEdges);
+
+    PriorityQueue pq(numOfEdges); // initialization of priority queue (based on binary minimum heap)
     PriorityQueue::Edge edge{};
     int v = 0; //initial vertex
-    costMST = 0;
+    costMST = 0; // initial cost of MST
 
-    bool *visited = new bool[numOfVertexes];
-    auto *mst = reinterpret_cast<PriorityQueue::Edge *>(new PriorityQueue::Edge[numOfVertexes - 1]);
+    bool *visited = new bool[numOfVertexes]; //  table of bool values (define whether vertex was already visited or not)
+    auto *mst = new PriorityQueue::Edge[numOfVertexes - 1]; // actual minimum spanning tree
 
-    for (int i = 0; i < numOfVertexes; i++)
+    for (int i = 0; i < numOfVertexes; i++) // all vertexes not visited
         visited[i] = false;
 
     visited[v] = true;
@@ -112,40 +113,37 @@ void MST::primList() {
     for (int i = 0; i < numOfVertexes - 1; i++) {
         temp = adjacency_list[v];
 
+
         while (temp) {
-            if (!visited[temp->neighbour])    // Jeśli sąsiad jest nieodwiedzony,
+            if (!visited[temp->neighbour])    // if neighbour in NOT visited
             {
-                edge.v1 = v;                // to tworzymy krawędź
+                edge.v1 = v;                // creating an edge
                 edge.v2 = temp->neighbour;
                 edge.weight = temp->weight;
-                pq.push(edge);            // Dodajemy ją do kolejki priorytetowej
+                pq.push(edge);            // insertion to the priority queue
             }
-            temp = temp->next;
+            temp = temp->next; // going to the next neighbours of temp
 
         }
         do {
-            edge = pq.front();            // Pobieramy krawędź z kolejki
-            pq.pop();
-        } while ((visited[edge.v1] && visited[edge.v2])); // Krawędź prowadzi poza drzewo?
-        if (visited[edge.v1]) {
-            v = edge.v2;
-            visited[edge.v2] = true;
-        }
-            //w przeciwnym przypadku ustawiamy v jako v1 i wierzcholek v1 jako odwiedzony
-        else {
-            v = edge.v1;
-            visited[edge.v1] = true;
-        }
+            edge = pq.front();
+            pq.pop();                     // extracting egde from priority queue
+        } while (visited[edge.v2]);        // checking if vertex 2 is already visited  yes then it means vertex is already in mst if not end of while loop
 
-        mst[i] = edge;
+        visited[edge.v2] = true;     // vertex as visited
+        v = edge.v2;                    // setting v2 as next vertex to search for smallest weight
+
+        mst[i] = edge;                 // adding the edge to the mst
         costMST += edge.weight;
 
     }
     std::cout << "\n***Prim's algorithm for list***\n";
-    for(int i = 0; i < numOfVertexes-1; i++ ) {
+    for (int i = 0; i < numOfVertexes - 1; i++) {
         std::cout << mst[i].v1 << "-" << mst[i].v2 << ":<" << mst[i].weight << ">\n";
     }
-    std::cout <<"\n\n" << "Minimal Spanning Tree Weight = " << costMST;
+    std::cout << "\n\n" << "Minimal Spanning Tree Weight = " << costMST;
+    delete[] visited;
+    delete[] mst;
 }
 
 void MST::primMatrix() {
@@ -155,7 +153,7 @@ void MST::primMatrix() {
     costMST = 0;
 
     bool *visited = new bool[numOfVertexes];
-    auto *mst = reinterpret_cast<PriorityQueue::Edge *>(new PriorityQueue::Edge[numOfVertexes - 1]);
+    auto *mst = new PriorityQueue::Edge[numOfVertexes - 1]; // actual minimum spanning tree
 
     for (int i = 0; i < numOfVertexes; i++)
         visited[i] = false;
@@ -165,43 +163,35 @@ void MST::primMatrix() {
     for (int i = 0; i < numOfVertexes - 1; i++) {
 
         for (int j = 0; j < numOfVertexes; j++) {
-            //jezeli wierzcholek nie jest odwiedzony
-            //i krawedz ma wartosc
-            //to ustawiamy krawedz
 
-            if (!visited[j] && adjacency_matrix[v][j] != 0) {
-                std::cout << "proba";
+
+            if (!visited[j] && adjacency_matrix[v][j] != 0) { // if vertex is not visited and its weigh diffrent then 0
                 edge.v1 = v;
                 edge.v2 = j;
                 edge.weight = adjacency_matrix[v][j];
-                pq.push(edge);
-                std::cout << "tutaj?\n";
+                pq.push(edge); //add to priority queue
             }
         }
-            do {
-                edge = pq.front();            // Pobieramy krawędź z kolejki
-                pq.pop();
-            } while ((visited[edge.v1] && visited[edge.v2])); // Krawędź prowadzi poza drzewo?
-            if (visited[edge.v1]) {
-                v = edge.v2;
-                visited[edge.v2] = true;
-            }
-                //w przeciwnym przypadku ustawiamy v jako v1 i wierzcholek v1 jako odwiedzony
-            else {
-                v = edge.v1;
-                visited[edge.v1] = true;
-            }
+        do {
+            edge = pq.front();
+            pq.pop();                // extracting an egde from priority queue
+        } while (visited[edge.v2]);  // checking if vertex 2 is already visited  yes then it means vertex is already in mst if not end of while loop
 
-            mst[i] = edge;
-            costMST += edge.weight;
+        visited[edge.v2] = true;     // v2 as visited
+        v = edge.v2;                 // setting v2 as next vertex to search for smallest weight
 
-        }
-        std::cout << "\n***Prim's algorithm for matrix***\n";
-        for(int i = 0; i < numOfVertexes-1; i++ ) {
-            std::cout << mst[i].v1 << "-" << mst[i].v2 << ":<" << mst[i].weight << ">\n";
-        }
-        std::cout <<"\n\n" << "Minimal Spanning Tree Weight = " << costMST;
-        }
+        mst[i] = edge;              // adding the edge to the mst
+        costMST += edge.weight;
+
+    }
+    std::cout << "\n***Prim's algorithm for matrix***\n";
+    for (int i = 0; i < numOfVertexes - 1; i++) {
+        std::cout << mst[i].v1 << "-" << mst[i].v2 << ":<" << mst[i].weight << ">\n";
+    }
+    std::cout << "\n\n" << "Minimal Spanning Tree Weight = " << costMST;
+    delete[] visited;
+    delete[] mst;
+}
 
 
 

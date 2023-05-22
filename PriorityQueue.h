@@ -29,7 +29,10 @@ public:
 
     void push(Edge e);
 
-    void pop();
+    Edge pop();
+    void swap(Edge &a, Edge &b);
+    void heapify(int i);
+
 
 
 };
