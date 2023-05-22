@@ -4,10 +4,10 @@
 
 void Menu::MenuMST() {
 
-    MST mst;
+    MST mst = * new MST();;
     std::string fileName;
 
-    int val;
+
     int option = -1;
 
 
@@ -32,13 +32,21 @@ void Menu::MenuMST() {
                 std::cout << "Enter your file name:";
                 std::cin >> fileName;
                 fileName = "..\\Input\\" + fileName;
+                mst.loadFromFile(fileName);
+                mst.printMatrix();
+                mst.printList();
                 break;
             case 2: //
                 break;
-            case 3: //
+            case 3: // display of matrix and list
+                mst.printMatrix();
+                mst.printList();
                 break;
-            case 4: //
-                break;
+            case 4:
+                mst.primList();
+                mst.primMatrix();
+                mst.printMatrix();
+                mst.printList();
             case 5: //
                 break;
             case 6: // exit
