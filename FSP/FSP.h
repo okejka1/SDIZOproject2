@@ -1,15 +1,17 @@
-
-#ifndef SDIZOPROJECT2_MST_H
-#define SDIZOPROJECT2_MST_H
-
-
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
+#include <queue>
 
-class MST {
+#ifndef SDIZOPROJECT2_FSP_H
+#define SDIZOPROJECT2_FSP_H
+
+
+class FSP {
 
 public:
+    const int MAXINT = 2147483647;
 
     struct Node{
         Node *next;
@@ -18,6 +20,7 @@ public:
 
     };
 
+    int initialVertex;
     int numOfEdges;
     int numOfVertices;
     double density;
@@ -26,23 +29,19 @@ public:
     Node *temp;
 
     int **adjacency_matrix;
-    int costMST;
-
-
-
-
+    int shortestPath;
 
 
     void loadFromFile(std::string fileName);
     void generateRandomGraph(int n, double density);
     void printMatrix();
     void printList();
-    void primList();
-    void primMatrix();
+    void listDijkstra();
+    void matrixDijkstra();
 
 
 
 };
 
 
-#endif //SDIZOPROJECT2_MST_H
+#endif //SDIZOPROJECT2_FSP_H

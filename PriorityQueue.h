@@ -14,12 +14,15 @@ public:
     };
 
     Edge *heap;
+    int size;
+
     int parent(int i);
 
     int left(int i);
 
     int right(int i);
-    int size;
+
+
 
     PriorityQueue(int n);
 
@@ -30,7 +33,9 @@ public:
     void push(Edge e);
 
     Edge pop();
+
     void swap(Edge &a, Edge &b);
+
     void heapify(int i);
 
 

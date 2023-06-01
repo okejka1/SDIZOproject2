@@ -11,19 +11,19 @@ void MST::loadFromFile(std::string fileName) {
     file.open(fileName);
     if (file.is_open()) {
 
-        file >> numOfEdges >> numOfVertexes;
+        file >> numOfEdges >> numOfVertices;
         if (file.fail()) {
             std::cout << "File error - READ INITIAL PARAMETERS\n";
             file.close();
         } else {
-            adjacency_list = new Node *[numOfVertexes]; // initialization of adjacency list
-            adjacency_matrix = new int *[numOfVertexes]; // initialization of adjacency matrix;
+            adjacency_list = new Node *[numOfVertices]; // initialization of adjacency list
+            adjacency_matrix = new int *[numOfVertices]; // initialization of adjacency matrix;
 
-            for (int i = 0; i < numOfVertexes; i++) {
-                adjacency_matrix[i] = new int[numOfVertexes];
+            for (int i = 0; i < numOfVertices; i++) {
+                adjacency_matrix[i] = new int[numOfVertices];
                 adjacency_list[i] = NULL; // Initially each node is null
-                for (int j = 0; j < numOfVertexes; j++) {
-                    adjacency_matrix[i][j] = 0; // 0 -> no relation between vertexes
+                for (int j = 0; j < numOfVertices; j++) {
+                    adjacency_matrix[i][j] = 0; // 0 -> no relation between vertices
                 }
             }
 
@@ -63,14 +63,14 @@ void MST::printMatrix() {
     std::cout << "\n====== Adjacency matrix ======\n\n  ";
 
 
-    for (int i = 0; i < numOfVertexes; i++) {
+    for (int i = 0; i < numOfVertices; i++) {
         std::cout << i << " ";
     }
     std::cout << "\n";
 
-    for (int i = 0; i < numOfVertexes; i++) {
+    for (int i = 0; i < numOfVertices; i++) {
         std::cout << i << " ";
-        for (int j = 0; j < numOfVertexes; j++) {
+        for (int j = 0; j < numOfVertices; j++) {
             std::cout << adjacency_matrix[i][j] << " ";
         }
         std::cout << "\n";
@@ -81,7 +81,7 @@ void MST::printMatrix() {
 void MST::printList() {
     std::cout << "\n====== Adjacency list ======\n";
 
-    for (int i = 0; i < numOfVertexes; i++) {
+    for (int i = 0; i < numOfVertices; i++) {
         std::cout << "\n" << i << ": ";
         temp = adjacency_list[i];
         while (temp) {
@@ -101,16 +101,16 @@ void MST::primList() {
     int v = 0; //initial vertex
     costMST = 0; // initial cost of MST
 
-    bool *visited = new bool[numOfVertexes]; //  table of bool values (define whether vertex was already visited or not)
-    auto *mst = new PriorityQueue::Edge[numOfVertexes - 1]; // actual minimum spanning tree
+    bool *visited = new bool[numOfVertices]; //  table of bool values (define whether vertex was already visited or not)
+    auto *mst = new PriorityQueue::Edge[numOfVertices - 1]; // actual minimum spanning tree
 
-    for (int i = 0; i < numOfVertexes; i++) // all vertexes not visited
+    for (int i = 0; i < numOfVertices; i++) // all vertices not visited
         visited[i] = false;
 
     visited[v] = true;
 
 
-    for (int i = 0; i < numOfVertexes - 1; i++) {
+    for (int i = 0; i < numOfVertices - 1; i++) {
         temp = adjacency_list[v];
 
 
@@ -138,7 +138,7 @@ void MST::primList() {
 
     }
     std::cout << "\n***Prim's algorithm for list***\n";
-    for (int i = 0; i < numOfVertexes - 1; i++) {
+    for (int i = 0; i < numOfVertices - 1; i++) {
         std::cout << mst[i].v1 << "-" << mst[i].v2 << ":<" << mst[i].weight << ">\n";
     }
     std::cout << "\n\n" << "Minimal Spanning Tree Weight = " << costMST;
@@ -152,20 +152,20 @@ void MST::primMatrix() {
     int v = 0; //initial vertex
     costMST = 0;
 
-    bool *visited = new bool[numOfVertexes];
-    auto *mst = new PriorityQueue::Edge[numOfVertexes - 1]; // actual minimum spanning tree
+    bool *visited = new bool[numOfVertices];
+    auto *mst = new PriorityQueue::Edge[numOfVertices - 1]; // actual minimum spanning tree
 
-    for (int i = 0; i < numOfVertexes; i++)
+    for (int i = 0; i < numOfVertices; i++)
         visited[i] = false;
 
     visited[v] = true;
 
-    for (int i = 0; i < numOfVertexes - 1; i++) {
+    for (int i = 0; i < numOfVertices - 1; i++) { // in each iteration one edge is added to mst
 
-        for (int j = 0; j < numOfVertexes; j++) {
+        for (int j = 0; j < numOfVertices; j++) {
 
 
-            if (!visited[j] && adjacency_matrix[v][j] != 0) { // if vertex is not visited and its weigh diffrent then 0
+            if (!visited[j] && adjacency_matrix[v][j] != 0) { // if vertex j is not visited and its weigh diffrent then 0
                 edge.v1 = v;
                 edge.v2 = j;
                 edge.weight = adjacency_matrix[v][j];
@@ -185,12 +185,20 @@ void MST::primMatrix() {
 
     }
     std::cout << "\n***Prim's algorithm for matrix***\n";
-    for (int i = 0; i < numOfVertexes - 1; i++) {
+    for (int i = 0; i < numOfVertices - 1; i++) {
         std::cout << mst[i].v1 << "-" << mst[i].v2 << ":<" << mst[i].weight << ">\n";
     }
     std::cout << "\n\n" << "Minimal Spanning Tree Weight = " << costMST;
     delete[] visited;
     delete[] mst;
+}
+
+void MST::generateRandomGraph(int n, double d) {
+    n = numOfVertices;
+    
+
+
+
 }
 
 
