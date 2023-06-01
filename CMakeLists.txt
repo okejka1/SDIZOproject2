@@ -3,4 +3,4 @@ project(SDIZOproject2)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(SDIZOproject2 main.cpp Menu.cpp Menu.h MST/MST.cpp MST/MST.h PriorityQueue.cpp PriorityQueue.h)
+add_executable(SDIZOproject2 main.cpp Menu.cpp Menu.h MST/MST.cpp MST/MST.h PriorityQueue.cpp PriorityQueue.h FSP/FSP.cpp FSP/FSP.h FSP/minHeap.cpp FSP/minHeap.h)

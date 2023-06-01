@@ -6,11 +6,10 @@ PriorityQueue::PriorityQueue(int nOfEdges) {
     size = 0;
 }
 PriorityQueue::~PriorityQueue() {
-    delete [] heap;
+    delete[] heap;
 }
 
 PriorityQueue::Edge PriorityQueue::front() {
-
     return heap[0];
 }
 
@@ -28,6 +27,7 @@ void PriorityQueue::push(PriorityQueue::Edge e) {
         }
 
     }
+
 
     PriorityQueue::Edge PriorityQueue::pop() {
 
