@@ -13,10 +13,10 @@ class FSP {
 public:
     const int MAXINT = 2147483647;
 
-    struct Node{
-        Node *next;
-        int neighbour;
-        int weight;
+    struct listNode{
+        listNode *next;
+        int vertex;
+        int cost;
 
     };
 
@@ -25,12 +25,10 @@ public:
     int numOfVertices;
     double density;
 
-    Node **adjacency_list;
-    Node *temp;
+    listNode **adjacency_list;
+    listNode *temp;
 
     int **adjacency_matrix;
-    int shortestPath;
-
 
     void loadFromFile(std::string fileName);
     void generateRandomGraph(int n, double density);

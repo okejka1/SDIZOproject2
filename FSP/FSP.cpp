@@ -1,6 +1,6 @@
 
 #include "FSP.h"
-#include "minHeap.h"
+#include "MinHeap.h"
 
 void FSP::loadFromFile(std::string fileName) {
     int v1, v2, weight;
@@ -13,7 +13,7 @@ void FSP::loadFromFile(std::string fileName) {
             std::cout << "File error - READ INITIAL PARAMETERS\n";
             file.close();
         } else {
-            adjacency_list = new Node *[numOfVertices]; // initialization of adjacency list
+            adjacency_list = new listNode *[numOfVertices]; // initialization of adjacency list
             adjacency_matrix = new int *[numOfVertices]; // initialization of adjacency matrix;
 
             for (int i = 0; i < numOfVertices; i++) {
@@ -32,10 +32,10 @@ void FSP::loadFromFile(std::string fileName) {
                 } else {
                     adjacency_matrix[v1][v2] = weight;
 
-                    temp = new Node; // creating new Node to adjacency list -> vertex v1
-                    temp->neighbour = v2; // setting a neighbour to v2
+                    temp = new listNode; // creating new listNode to adjacency list -> vertex v1
+                    temp->vertex = v2; // setting a vertex to v2
                     temp->next = adjacency_list[v1];
-                    temp->weight = weight;
+                    temp->cost = weight;
                     adjacency_list[v1] = temp;
 
                 }
@@ -77,7 +77,7 @@ void FSP::printList() {
         std::cout << "\n" << i << ": ";
         temp = adjacency_list[i];
         while (temp) {
-            std::cout << " " << temp->neighbour << " <" << temp->weight << ">, ";
+            std::cout << " " << temp->vertex << " <" << temp->cost << ">, ";
             temp = temp->next;
         }
 
@@ -86,48 +86,129 @@ void FSP::printList() {
 }
 
 void FSP::listDijkstra() {
+    int *cost_of_path = new int[numOfVertices]; // Wynikowa tablica kosztow
+    int *predecessors = new int[numOfVertices]; // Poprzednicy
+    bool *QS = new bool[numOfVertices];       // visited
+    int *S = new int [ numOfVertices ];       // Stos do wypisywania wynikow
+    int sptr = 0;
 
-    bool *QS;
-    int *d;
-    int *p;
+    MinHeap minHeap(numOfVertices);
 
-    d = new int[numOfVertices];      //
-    p = new int[numOfVertices];      // Tablica poprzedników
-    QS = new bool[numOfVertices];    // Zbiory Q i S
-
-
-    for (int i = 0; i < numOfVertices; i++) // initialization of dynamic arrays
-    {
-        d[i] = MAXINT;
-        p[i] = -1;
+    for (int i = 0; i < numOfVertices; i++) {
+        cost_of_path[i] = MAXINT;
+        predecessors[i] = -1;
         QS[i] = false;
     }
 
-    d[initialVertex] = 0;
-
-    minHeap heap(numOfVertices);
-
-    for (int i = 0; i < numOfVertices; i++) {
-        heap.insert(i);
+    cost_of_path[initialVertex] = 0;
+    for(int i = 0; i < numOfVertices; i++) {
+        minHeap.insert(i, cost_of_path[i]);
     }
 
-    while (!heap.isEmpty()) {
-        int u = heap.extractMin();
-
+    // Rozpocznij algorytm
+    while (!minHeap.isEmpty()) {
+        int u = minHeap.extractMin().vertex;
+        temp = adjacency_list[u];
         QS[u] = true;
 
-        while (temp) {
-            if (!QS[temp->neighbour] && (d[temp->neighbour] > d[u] + temp->weight)) {
-                d[temp->neighbour] = d[u] + temp->weight;
-                p[temp->neighbour] = u;
-                heap.decreaseKey(temp->neighbour);
+        while(temp) {
+            if (cost_of_path[temp->vertex] > cost_of_path[u] + temp->cost){
+                cost_of_path[temp->vertex] = cost_of_path[u] + temp->cost;
+                predecessors[temp->vertex] = u;
+                minHeap.decreaseKey(temp->vertex, cost_of_path[temp->vertex]);
             }
-
+            temp = temp->next;
         }
+    }
+    std::cout << "\n\nPrinting the shortest paths:\n";
+    // Gotowe, wyświetlamy wyniki
+    for (int i = 0; i < numOfVertices; i++) {
+        std::cout << i << ": ";
 
+        // Ścieżkę przechodzimy od końca ku początkowi,
+        // Zapisując na stosie kolejne wierzchołki
+
+        for (int j = i; j > -1; j = predecessors[j])
+            S[sptr++] = j;
+
+        // Wyświetlamy ścieżkę, pobierając wierzchołki ze stosu
+
+        while (sptr)
+            std::cout << S[--sptr] << " ";
+
+        // Na końcu ścieżki wypisujemy jej koszt
+
+        std::cout << "$" << cost_of_path[i];
+        std::cout << "\n";
     }
 
+    // Usuwamy tablice dynamiczne
+
+    delete[] cost_of_path;
+    delete[] predecessors;
+    delete[] QS;
+    delete[] S;
 }
 
+void FSP::matrixDijkstra() {
+    int *cost_of_path = new int[numOfVertices]; // Wynikowa tablica kosztow
+    int *predecessors = new int[numOfVertices]; // Poprzednicy
+    bool *QS = new bool[numOfVertices];       // visited
+    int *S = new int [ numOfVertices ];       // Stos do wypisywania wynikow
+    int sptr = 0;
 
+    MinHeap minHeap(numOfVertices);
 
+    for (int i = 0; i < numOfVertices; i++) {
+        cost_of_path[i] = MAXINT;
+        predecessors[i] = -1;
+        QS[i] = false;
+    }
+
+    cost_of_path[initialVertex] = 0;
+    for(int i = 0; i < numOfVertices; i++) {
+        minHeap.insert(i, cost_of_path[i]);
+    }
+
+    // Rozpocznij algorytm
+    while (!minHeap.isEmpty()) {
+        int u = minHeap.extractMin().vertex;
+        QS[u] = true;
+
+        for(int v = 0; v < numOfVertices; v++)
+            if (cost_of_path[v] > cost_of_path[u] + adjacency_matrix[u][v]) {
+                cost_of_path[v] = cost_of_path[u] + adjacency_matrix[u][v];
+                predecessors[v] = u;
+                minHeap.decreaseKey(v, cost_of_path[v]);
+            }
+
+    }
+    // Gotowe, wyświetlamy wyniki
+    for (int i = 0; i < numOfVertices; i++) {
+        std::cout << i << ": ";
+
+        // Ścieżkę przechodzimy od końca ku początkowi,
+        // Zapisując na stosie kolejne wierzchołki
+
+        for (int j = i; j > -1; j = predecessors[j])
+            S[sptr++] = j;
+
+        // Wyświetlamy ścieżkę, pobierając wierzchołki ze stosu
+
+        while (sptr)
+            std::cout << S[--sptr] << " ";
+
+        // Na końcu ścieżki wypisujemy jej koszt
+
+        std::cout << "$" << cost_of_path[i];
+        std::cout << "\n";
+    }
+
+    // Usuwamy tablice dynamiczne
+
+    delete[] cost_of_path;
+    delete[] predecessors;
+    delete[] QS;
+    delete[] S;
+
+}

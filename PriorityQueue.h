@@ -2,7 +2,7 @@
 
 #ifndef SDIZOPROJECT2_PRIORITYQUEUE_H
 #define SDIZOPROJECT2_PRIORITYQUEUE_H
-
+#include <iostream>
 
 class PriorityQueue {
 

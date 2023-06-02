@@ -101,7 +101,7 @@ void Menu::MenuFSP() {
                 fsp.printList();
                 break;
             case 4: // Dijkstra's algorithm
-
+                fsp.listDijkstra();
             case 5: //
                 break;
             case 6: // exit

@@ -36,8 +36,8 @@ void MST::loadFromFile(std::string fileName) {
                     adjacency_matrix[v1][v2] = weight;
                     adjacency_matrix[v2][v1] = weight;
 
-                    temp = new Node; // creating new Node to adjacency list -> vertex v1
-                    temp->neighbour = v2; // setting a neighbour to v2
+                    temp = new Node; // creating new listNode to adjacency list -> vertex v1
+                    temp->neighbour = v2; // setting a vertex to v2
                     temp->next = adjacency_list[v1];
                     temp->weight = weight;
                     adjacency_list[v1] = temp;
@@ -115,7 +115,7 @@ void MST::primList() {
 
 
         while (temp) {
-            if (!visited[temp->neighbour])    // if neighbour in NOT visited
+            if (!visited[temp->neighbour])    // if vertex in NOT visited
             {
                 edge.v1 = v;                // creating an edge
                 edge.v2 = temp->neighbour;
@@ -131,7 +131,7 @@ void MST::primList() {
         } while (visited[edge.v2]);        // checking if vertex 2 is already visited  yes then it means vertex is already in mst if not end of while loop
 
         visited[edge.v2] = true;     // vertex as visited
-        v = edge.v2;                    // setting v2 as next vertex to search for smallest weight
+        v = edge.v2;                    // setting v2 as next vertex to search for smallest cost
 
         mst[i] = edge;                 // adding the edge to the mst
         costMST += edge.weight;
@@ -178,7 +178,7 @@ void MST::primMatrix() {
         } while (visited[edge.v2]);  // checking if vertex 2 is already visited  yes then it means vertex is already in mst if not end of while loop
 
         visited[edge.v2] = true;     // v2 as visited
-        v = edge.v2;                 // setting v2 as next vertex to search for smallest weight
+        v = edge.v2;                 // setting v2 as next vertex to search for smallest cost
 
         mst[i] = edge;              // adding the edge to the mst
         costMST += edge.weight;
