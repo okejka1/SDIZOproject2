@@ -1,5 +1,6 @@
 #include <iostream>
 #include "MinHeap.h"
+#include <cmath>
 
 
 MinHeap::MinHeap(int capacity) {
@@ -105,7 +106,6 @@ void MinHeap::print() {
     std::cout << "---------\n";
 }
 
-#include <cmath>
 
 void MinHeap::pretty_print() {
     std::cout << "-----\n";

@@ -7,6 +7,8 @@ void Menu::MenuMST() {
 
     MST mst = * new MST();;
     std::string fileName;
+    int num;
+    double den;
 
 
     int option = -1;
@@ -38,6 +40,11 @@ void Menu::MenuMST() {
                 mst.printList();
                 break;
             case 2: // generating a random graph
+                std::cout << "Enter number of vertices and density of the graph\n";
+                std::cin >> num >> den;
+                mst.generateRandomGraph(num,den);
+                mst.printMatrix();
+                mst.printList();
                 break;
             case 3: // display of matrix and list
                 mst.printMatrix();
@@ -102,6 +109,7 @@ void Menu::MenuFSP() {
                 break;
             case 4: // Dijkstra's algorithm
                 fsp.listDijkstra();
+                fsp.matrixDijkstra();
             case 5: //
                 break;
             case 6: // exit

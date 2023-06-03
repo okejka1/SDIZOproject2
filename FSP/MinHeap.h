@@ -44,6 +44,7 @@ public:
     bool isEmpty();
 
 
+
     void insert(int vertex, int distance);
 };
 

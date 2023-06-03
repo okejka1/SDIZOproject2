@@ -16,7 +16,7 @@ void MST::loadFromFile(std::string fileName) {
             std::cout << "File error - READ INITIAL PARAMETERS\n";
             file.close();
         } else {
-            adjacency_list = new Node *[numOfVertices]; // initialization of adjacency list
+            adjacency_list = new listNode *[numOfVertices]; // initialization of adjacency list
             adjacency_matrix = new int *[numOfVertices]; // initialization of adjacency matrix;
 
             for (int i = 0; i < numOfVertices; i++) {
@@ -36,16 +36,16 @@ void MST::loadFromFile(std::string fileName) {
                     adjacency_matrix[v1][v2] = weight;
                     adjacency_matrix[v2][v1] = weight;
 
-                    temp = new Node; // creating new listNode to adjacency list -> vertex v1
-                    temp->neighbour = v2; // setting a vertex to v2
+                    temp = new listNode; // creating new listNode to adjacency list -> vertex v1
+                    temp->vertex = v2; // setting a vertex to v2
                     temp->next = adjacency_list[v1];
-                    temp->weight = weight;
+                    temp->cost = weight;
                     adjacency_list[v1] = temp;
 
-                    temp = new Node;
-                    temp->neighbour = v1;
+                    temp = new listNode;
+                    temp->vertex = v1;
                     temp->next = adjacency_list[v2];
-                    temp->weight = weight;
+                    temp->cost = weight;
                     adjacency_list[v2] = temp;
 
                 }
@@ -85,7 +85,7 @@ void MST::printList() {
         std::cout << "\n" << i << ": ";
         temp = adjacency_list[i];
         while (temp) {
-            std::cout << " " << temp->neighbour << " <" << temp->weight << ">, ";
+            std::cout << " " << temp->vertex << " <" << temp->cost << ">, ";
             temp = temp->next;
         }
 
@@ -115,11 +115,11 @@ void MST::primList() {
 
 
         while (temp) {
-            if (!visited[temp->neighbour])    // if vertex in NOT visited
+            if (!visited[temp->vertex])    // if vertex in NOT visited
             {
                 edge.v1 = v;                // creating an edge
-                edge.v2 = temp->neighbour;
-                edge.weight = temp->weight;
+                edge.v2 = temp->vertex;
+                edge.weight = temp->cost;
                 pq.push(edge);            // insertion to the priority queue
             }
             temp = temp->next; // going to the next neighbours of temp
@@ -165,7 +165,8 @@ void MST::primMatrix() {
         for (int j = 0; j < numOfVertices; j++) {
 
 
-            if (!visited[j] && adjacency_matrix[v][j] != 0) { // if vertex j is not visited and its weigh diffrent then 0
+            if (!visited[j] &&
+                adjacency_matrix[v][j] != 0) { // if vertex j is not visited and its weigh diffrent then 0
                 edge.v1 = v;
                 edge.v2 = j;
                 edge.weight = adjacency_matrix[v][j];
@@ -194,9 +195,149 @@ void MST::primMatrix() {
 }
 
 void MST::generateRandomGraph(int n, double d) {
-    n = numOfVertices;
-    
+    // input check
+    if (n <= 0 || d <= 0 || d > 1) {
+        std::cout << "\nINCORRECT INPUT\n";
+        return;
+    }
 
+    // initialization of graph's data
+    numOfVertices = n;
+    density = d;
+    numOfEdges = (density * numOfVertices * (numOfVertices - 1)) / 2;
+    int maxEdges = ((numOfVertices) * (numOfVertices - 1)) / 2;
+
+    //Initialization of graph representatives
+    adjacency_list = new listNode *[numOfVertices];
+    adjacency_matrix = new int *[numOfVertices];
+
+
+    if (d > 0.5) {
+
+        for (int i = 0; i < numOfVertices; i++) {
+            adjacency_matrix[i] = new int[numOfVertices];             // second dimension of matrix
+            adjacency_list[i] = NULL;
+            for (int j = 0; j < numOfVertices; j++) {
+                if (i == j) {
+                    adjacency_matrix[i][j] = 0;                        // diagonal = 0
+                } else {
+                    adjacency_matrix[i][j] = -1;                          // no relations between vertices
+                }
+            }
+        }
+
+        /// LOSUJE PUSTE KRAWEDZI I WSTAWIAM TAM 0
+        std::cout << maxEdges << " " << numOfEdges;
+        for (int i = 0; i < maxEdges - numOfEdges; i++) {
+            int randV1 = rand() % numOfVertices;
+            int randV2 = rand() % numOfVertices;
+            bool tryAgain = false;
+            do {
+                tryAgain = false;
+                if (randV1 != randV2 &&
+                    adjacency_matrix[randV1][randV2] == -1) {                    // losuje do czasu gdy wylosuja sie dwa rozne
+
+                    adjacency_matrix[randV1][randV2] = 0;
+                    adjacency_matrix[randV2][randV1] = 0;
+
+//                    std::cout << "\n Udalo sie wstawic zero V1: " << randV1 << " V2:" << randV2;
+
+                } else {
+                    srand(time(NULL));
+                    randV1 = rand() % numOfVertices;
+                    randV2 = rand() % numOfVertices;
+                    tryAgain = true;
+
+                }
+            } while (tryAgain);                 // do skutku probuje na nowo wygenerowac krawedzi
+        }
+
+        /// po wstawieniu wszystkich "braków krawedzi" wstawiam losowe krawedzi
+        for (int x = 0; x < numOfVertices; x++) {
+            for (int y = 0; y < x; y++) {
+
+                int randWeight = rand() % 100 + 1;
+
+                if (adjacency_matrix[x][y] != 0) {
+                    adjacency_matrix[x][y] = randWeight;
+                    adjacency_matrix[y][x] = randWeight;
+
+                    listNode *newNode1 = new listNode;                           // wstawiam do listy
+                    newNode1->cost = randWeight;
+                    newNode1->vertex = x;
+                    newNode1->next = adjacency_list[y];
+                    adjacency_list[y] = newNode1;
+
+                    listNode *newNode2 = new listNode;                           // wstawiam do listy
+                    newNode2->cost = randWeight;
+                    newNode2->vertex = y;
+                    newNode2->next = adjacency_list[x];
+                    adjacency_list[x] = newNode2;
+
+//                    std::cout << "\n Wstawiono V1: " << x << " V2:" << y << " waga:" << randWeight;
+                }
+            }
+
+
+        }
+
+    } else {
+
+        /// TWORZE STRUKTURY I WYPELNIAM JE PUSTYMI WARTOSCIAMI
+        for (int i = 0; i < numOfVertices; i++) {
+            adjacency_matrix[i] = new int[numOfVertices];             // Tworzenie dwuwymiarowej tablicy - dokladanie drugiego wymiaru
+            adjacency_list[i] = NULL;
+            for (int j = 0; j < numOfVertices; j++) {
+                adjacency_matrix[i][j] = 0;                           // ustawiam w macierzy na brak relacji pomiedzy wierzcholkami
+            }
+        }
+
+        // generating graph for density <= 0.5
+        for (int i = 0; i < numOfEdges; i++) {
+
+            int randWeight = rand() % 100 + 1;
+            int randV1 = rand() % numOfVertices;
+            int randV2 = rand() % numOfVertices;
+            bool tryAgain = false;
+
+            do {
+                tryAgain = false;
+                if (randV1 != randV2 && adjacency_matrix[randV1][randV2] ==
+                                        0) {                    // losuje do czasu gdy wylosuja sie dwa rozne
+
+                    adjacency_matrix[randV1][randV2] = randWeight;         //wstawiam do macierzy
+                    adjacency_matrix[randV2][randV1] = randWeight;
+
+
+                    listNode *newNode1 = new listNode;                           // wstawiam do listy
+                    newNode1->cost = randWeight;
+                    newNode1->vertex = randV2;
+                    newNode1->next = adjacency_list[randV1];
+                    adjacency_list[randV1] = newNode1;
+
+                    listNode *newNode2 = new listNode;                           // wstawiam do listy
+                    newNode2->cost = randWeight;
+                    newNode2->vertex = randV1;
+                    newNode2->next = adjacency_list[randV2];
+                    adjacency_list[randV2] = newNode2;
+
+                    std::cout << "\n Wstawiono. V1: " << randV1 << " V2:" << randV2 << " waga:" << randWeight;
+
+                } else {
+                    srand(time(NULL));
+                    randV1 = rand() % numOfVertices;
+                    randV2 = rand() % numOfVertices;
+                    tryAgain = true;
+
+                }
+            } while (tryAgain);                 // do skutku probuje na nowo wygenerowac krawedzi
+
+        }
+
+    }
+
+
+    std::cout << "\n\n";
 
 
 }

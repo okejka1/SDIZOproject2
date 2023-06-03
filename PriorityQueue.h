@@ -23,7 +23,6 @@ public:
     int right(int i);
 
 
-
     PriorityQueue(int n);
 
     ~PriorityQueue();

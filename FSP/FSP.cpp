@@ -50,6 +50,7 @@ void FSP::loadFromFile(std::string fileName) {
 
 void FSP::generateRandomGraph(int n, double density) {
 
+
 }
 
 void FSP::printMatrix() {
@@ -120,7 +121,7 @@ void FSP::listDijkstra() {
             temp = temp->next;
         }
     }
-    std::cout << "\n\nPrinting the shortest paths:\n";
+    std::cout << "\n\nPrinting the shortest paths (LIST)\n";
     // Gotowe, wyświetlamy wyniki
     for (int i = 0; i < numOfVertices; i++) {
         std::cout << i << ": ";
@@ -170,20 +171,23 @@ void FSP::matrixDijkstra() {
         minHeap.insert(i, cost_of_path[i]);
     }
 
-    // Rozpocznij algorytm
+    // start of the algorithm
     while (!minHeap.isEmpty()) {
-        int u = minHeap.extractMin().vertex;
-        QS[u] = true;
+        int u = minHeap.extractMin().vertex; // getting the vertex with smallest distance
+        QS[u] = true; // visited
 
         for(int v = 0; v < numOfVertices; v++)
-            if (cost_of_path[v] > cost_of_path[u] + adjacency_matrix[u][v]) {
-                cost_of_path[v] = cost_of_path[u] + adjacency_matrix[u][v];
-                predecessors[v] = u;
-                minHeap.decreaseKey(v, cost_of_path[v]);
+            if(adjacency_matrix[u][v] != 0) {
+                if (cost_of_path[v] > cost_of_path[u] + adjacency_matrix[u][v]) {
+                    cost_of_path[v] = cost_of_path[u] + adjacency_matrix[u][v];
+                    predecessors[v] = u;
+                    minHeap.decreaseKey(v, cost_of_path[v]);
+                }
             }
 
     }
-    // Gotowe, wyświetlamy wyniki
+
+    std::cout << "\n\nPrinting the shortest paths (MATRIX)\n";
     for (int i = 0; i < numOfVertices; i++) {
         std::cout << i << ": ";
 
