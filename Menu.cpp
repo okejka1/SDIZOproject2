@@ -20,7 +20,7 @@ void Menu::MenuMST() {
         std::cout << "2.Generate the structure\n";
         std::cout << "3.Display the structure\n";
         std::cout << "4.Algorithm 1 - Prim's algorithm\n";
-        std::cout << "5.Algorithm 2 - Kruskal's algorithm\n";
+        std::cout << "5.Time tests\n";
         std::cout << "6.Exit\n";
 
         std::cin.clear();
@@ -55,7 +55,9 @@ void Menu::MenuMST() {
                 mst.primMatrix();
                 mst.printMatrix();
                 mst.printList();
+                break;
             case 5: //
+                mst.measureTime(50);
                 break;
             case 6: // exit
                 break;
@@ -69,10 +71,12 @@ void Menu::MenuMST() {
 
 void Menu::MenuFSP() {
 
-    FSP fsp = * new FSP();;
+    FSP fsp = * new FSP();
     std::string fileName;
 
 
+    int num;
+    double den;
     int option = -1;
 
 
@@ -82,7 +86,7 @@ void Menu::MenuFSP() {
         std::cout << "2.Generate the structure\n";
         std::cout << "3.Display the structure\n";
         std::cout << "4.Algorithm 1 - Dijkstra''s algorithm\n";
-        std::cout << "5.Algorithm 2 - Bellman - Ford algorithm\n";
+        std::cout << "5.Time tests\n";
         std::cout << "6.Exit\n";
 
         std::cin.clear();
@@ -102,6 +106,11 @@ void Menu::MenuFSP() {
                 fsp.printList();
                 break;
             case 2: // generating a random graph
+                std::cout << "Enter number of vertices and density of the graph\n";
+                std::cin >> num >> den;
+                fsp.generateRandomGraph(num,den);
+                fsp.printMatrix();
+                fsp.printList();
                 break;
             case 3: // display of graph's representation
                 fsp.printMatrix();
@@ -111,6 +120,7 @@ void Menu::MenuFSP() {
                 fsp.listDijkstra();
                 fsp.matrixDijkstra();
             case 5: //
+                fsp.measureTime(50);
                 break;
             case 6: // exit
                 break;

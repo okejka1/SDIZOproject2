@@ -2,6 +2,7 @@
 #include <queue>
 #include "MST.h"
 #include "../PriorityQueue.h"
+#include "../Timer.h"
 
 
 void MST::loadFromFile(std::string fileName) {
@@ -144,6 +145,8 @@ void MST::primList() {
     std::cout << "\n\n" << "Minimal Spanning Tree Weight = " << costMST;
     delete[] visited;
     delete[] mst;
+
+
 }
 
 void MST::primMatrix() {
@@ -189,12 +192,11 @@ void MST::primMatrix() {
     for (int i = 0; i < numOfVertices - 1; i++) {
         std::cout << mst[i].v1 << "-" << mst[i].v2 << ":<" << mst[i].weight << ">\n";
     }
-    std::cout << "\n\n" << "Minimal Spanning Tree Weight = " << costMST;
+    std::cout << "\n\n" << "Minimal Spanning Tree Weight = " << costMST << "\n";
     delete[] visited;
     delete[] mst;
 }
-
-void MST::generateRandomGraph(int n, double d) {
+void MST::generateRandomGraph(int n, double d){
     // input check
     if (n <= 0 || d <= 0 || d > 1) {
         std::cout << "\nINCORRECT INPUT\n";
@@ -212,6 +214,7 @@ void MST::generateRandomGraph(int n, double d) {
     adjacency_matrix = new int *[numOfVertices];
 
 
+
     if (d > 0.5) {
 
         for (int i = 0; i < numOfVertices; i++) {
@@ -225,6 +228,7 @@ void MST::generateRandomGraph(int n, double d) {
                 }
             }
         }
+
 
         /// LOSUJE PUSTE KRAWEDZI I WSTAWIAM TAM 0
         std::cout << maxEdges << " " << numOfEdges;
@@ -251,6 +255,9 @@ void MST::generateRandomGraph(int n, double d) {
                 }
             } while (tryAgain);                 // do skutku probuje na nowo wygenerowac krawedzi
         }
+
+
+
 
         /// po wstawieniu wszystkich "braków krawedzi" wstawiam losowe krawedzi
         for (int x = 0; x < numOfVertices; x++) {
@@ -291,9 +298,28 @@ void MST::generateRandomGraph(int n, double d) {
                 adjacency_matrix[i][j] = 0;                           // ustawiam w macierzy na brak relacji pomiedzy wierzcholkami
             }
         }
+        for (int i = 0; i < numOfVertices - 1; i++) {
+            int randWeight = rand() % 100 + 1;
+
+            adjacency_matrix[i][i + 1] = randWeight;
+            adjacency_matrix[i + 1][i] = randWeight;
+
+            listNode *newNode1 = new listNode;
+            newNode1->cost = randWeight;
+            newNode1->vertex = i + 1;
+            newNode1->next = adjacency_list[i];
+            adjacency_list[i] = newNode1;
+
+            listNode *newNode2 = new listNode;
+            newNode2->cost = randWeight;
+            newNode2->vertex = i;
+            newNode2->next = adjacency_list[i + 1];
+            adjacency_list[i + 1] = newNode2;
+        }
+
 
         // generating graph for density <= 0.5
-        for (int i = 0; i < numOfEdges; i++) {
+        for (int i = 0; i < numOfEdges-numOfVertices-1; i++) {
 
             int randWeight = rand() % 100 + 1;
             int randV1 = rand() % numOfVertices;
@@ -302,8 +328,7 @@ void MST::generateRandomGraph(int n, double d) {
 
             do {
                 tryAgain = false;
-                if (randV1 != randV2 && adjacency_matrix[randV1][randV2] ==
-                                        0) {                    // losuje do czasu gdy wylosuja sie dwa rozne
+                if (randV1 != randV2 && adjacency_matrix[randV1][randV2] == 0) {                    // losuje do czasu gdy wylosuja sie dwa rozne
 
                     adjacency_matrix[randV1][randV2] = randWeight;         //wstawiam do macierzy
                     adjacency_matrix[randV2][randV1] = randWeight;
@@ -333,14 +358,67 @@ void MST::generateRandomGraph(int n, double d) {
             } while (tryAgain);                 // do skutku probuje na nowo wygenerowac krawedzi
 
         }
-
     }
 
 
     std::cout << "\n\n";
+}
 
+
+
+
+void MST::measureTime(int numOfTests) {
+    std::ofstream file;
+
+    Timer timer;
+    file.open("..\\MST\\test_results_mst.txt");
+    if (file.is_open()) {
+        file << "MST tests\n";
+        file << "Prim list | Prim matrix\n";
+        double list[3] = {0.2,0.6, 0.99};
+        for (int i = 10; i <= 70; i += 10) {
+            for (double localDensity : list) {
+                file << "\n\nTEST->(NUMBER OF VERTICES: " << i << ", DENSITY: " << localDensity << ")\n";
+                generateRandomGraph(i, localDensity);
+
+                for(long & result : results){ // reset of previous data measurements
+                    result = 0;
+                }
+
+
+                for(int p = 0; p < numOfTests; p++){ // PRIM LIST
+                    timer.startTime();
+                    this->primList();
+                    timer.stopTime();
+                    results[0] += timer.nanoMeasuredTime();
+                }
+
+                file << "adjacency_list: " << results[0]/numOfTests << " [ns]\n";
+
+                for(long & result : results){ // reset of previous data measurements
+                    result = 0;
+                }
+
+                for(int p  = 0; p < numOfTests; p++){ // PRIM LIST
+                    timer.startTime();
+                    this->primMatrix();
+                    timer.stopTime();
+                    results[1] += timer.nanoMeasuredTime();
+                }
+                file << "adjacency_matrix: " << results[1]/numOfTests << " [ns]\n";
+
+            }
+
+
+        }
+
+
+    }
 
 }
+
+
+
 
 
 

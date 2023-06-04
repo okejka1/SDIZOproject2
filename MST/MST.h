@@ -1,4 +1,3 @@
-
 #ifndef SDIZOPROJECT2_MST_H
 #define SDIZOPROJECT2_MST_H
 
@@ -17,6 +16,12 @@ public:
         int cost;
 
     };
+    long results[2];
+
+    /*
+     result[0] -> prim's list
+     result[1] -> prim's matrix
+     */
 
     int numOfEdges;
     int numOfVertices;
@@ -39,6 +44,7 @@ public:
     void printList();
     void primList();
     void primMatrix();
+    void measureTime(int numOfTests);
 
 
 

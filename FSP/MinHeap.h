@@ -8,6 +8,8 @@ public:
 
 
     struct Node {
+        Node(){}
+        Node(int vertex, int dist):vertex(vertex), distance(dist){}
         int vertex;
         int distance; // priority key in our priority queue
     };

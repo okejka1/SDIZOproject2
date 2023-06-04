@@ -19,6 +19,11 @@ public:
         int cost;
 
     };
+    long results[2];
+    /*
+     result[0] -> Dijkstra's list
+     result[1] -> Dijkstra's matrix
+     */
 
     int initialVertex;
     int numOfEdges;
