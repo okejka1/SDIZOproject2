@@ -57,80 +57,11 @@ void FSP::generateRandomGraph(int n, double d) {
     numOfVertices = n;
     density = d;
     numOfEdges = (density * numOfVertices * (numOfVertices - 1));
-    int maxEdges = ((numOfVertices) * (numOfVertices - 1));
 
     //Initialization of graph representatives
     adjacency_list = new listNode *[numOfVertices];
     adjacency_matrix = new int *[numOfVertices];
 
-
-//    if (d > 0.5) {
-//
-//        for (int i = 0; i < numOfVertices; i++) {
-//            adjacency_matrix[i] = new int[numOfVertices];             // second dimension of matrix
-//            adjacency_list[i] = NULL;
-//            for (int j = 0; j < numOfVertices; j++) {
-//                if (i == j) {
-//                    adjacency_matrix[i][j] = 0;                        // diagonal = 0
-//                } else {
-//                    adjacency_matrix[i][j] = -1;                          // no relations between vertices
-//                }
-//            }
-//        }
-//
-//
-//        /// LOSUJE PUSTE KRAWEDZI I WSTAWIAM TAM 0
-//        std::cout << maxEdges << " " << numOfEdges;
-//        for (int i = 0; i < maxEdges - numOfEdges; i++) {
-//            int randV1 = rand() % numOfVertices;
-//            int randV2 = rand() % numOfVertices;
-//            bool tryAgain = false;
-//            do {
-//                tryAgain = false;
-//                if (randV1 != randV2 &&
-//                    adjacency_matrix[randV1][randV2] ==
-//                    -1) {                    // losuje do czasu gdy wylosuja sie dwa rozne
-//
-//                    adjacency_matrix[randV1][randV2] = 0;
-//
-//
-//                } else {
-//                    srand(time(NULL));
-//                    randV1 = rand() % numOfVertices;
-//                    randV2 = rand() % numOfVertices;
-//                    tryAgain = true;
-//
-//                }
-//            } while (tryAgain);                 // do skutku probuje na nowo wygenerowac krawedzi
-//        }
-//
-//
-//
-//
-//        /// po wstawieniu wszystkich "braków krawedzi" wstawiam losowe krawedzi
-//        for (int x = 0; x < numOfVertices; x++) {
-//            for (int y = 0; y < x; y++) {
-//
-//                int randWeight = rand() % 100 + 1;
-//
-//                if (adjacency_matrix[x][y] != 0) {
-//                    adjacency_matrix[x][y] = randWeight;
-//
-//
-//                    listNode *newNode = new listNode;                           // wstawiam do listy
-//                    newNode->cost = randWeight;
-//                    newNode->vertex = y;
-//                    newNode->next = adjacency_list[x];
-//                    adjacency_list[x] = newNode;
-//
-////                    std::cout << "\n Wstawiono V1: " << x << " V2:" << y << " waga:" << randWeight;
-//                }
-//            }
-//
-//
-//        }
-//
-//    } else {
 
         /// TWORZE STRUKTURY I WYPELNIAM JE PUSTYMI WARTOSCIAMI
         for (int i = 0; i < numOfVertices; i++) {
@@ -355,26 +286,28 @@ void FSP::printList() {
 }
 
 void FSP::listDijkstra() {
-    int *cost_of_path = new int[numOfVertices]; // Wynikowa tablica kosztow
-    int *predecessors = new int[numOfVertices]; // Poprzednicy
-    bool *QS = new bool[numOfVertices];       // visited
-    int *S = new int[numOfVertices];       // Stos do wypisywania wynikow
-    int sptr = 0;
+    int *cost_of_path = new int[numOfVertices]; // an array that stores cost of path to each vertex
+    int *predecessors = new int[numOfVertices]; // an array that stores information about predecessors of the shortest path
+    bool *QS = new bool[numOfVertices];       // an array that stores information whether vertex was visited or not
+    int *S = new int[numOfVertices];       // stack which helps with an output of the algorithm
+    int sptr = 0; // stack pointer
 
-    MinHeap minHeap(numOfVertices);
+    MinHeap minHeap(numOfVertices); // creating our priority queue
 
-    for (int i = 0; i < numOfVertices; i++) {
+    for (int i = 0; i < numOfVertices; i++) { // setting initial parameters to our dynamic arrays
         cost_of_path[i] = MAXINT;
         predecessors[i] = -1;
         QS[i] = false;
     }
 
-    cost_of_path[initialVertex] = 0;
+    cost_of_path[initialVertex] = 0; // change of cost of path for initial vertex
+
+    // inserting all the vertices into minHeap
     for (int i = 0; i < numOfVertices; i++) {
         minHeap.insert(i, cost_of_path[i]);
     }
 
-    // Rozpocznij algorytm
+    // start of actual algorithm
     while (!minHeap.isEmpty()) {
         int u = minHeap.extractMin().vertex;
         temp = adjacency_list[u];
@@ -441,7 +374,7 @@ void FSP::matrixDijkstra() {
 
     // start of the algorithm
     while (!minHeap.isEmpty()) {
-        int u = minHeap.extractMin().vertex; // getting the vertex with smallest distance
+        int u = minHeap.extractMin().vertex; // getting the vertex with the smallest distance
         QS[u] = true; // visited
 
         for (int v = 0; v < numOfVertices; v++)
@@ -494,13 +427,13 @@ void FSP::measureTime(int numOfTests) {
         file << "FSP tests\n";
         file << "Dijkstra list | Dijkstra matrix\n";
         double list[3] = {0.2, 0.6, 0.99};
-        for (int i = 10; i <= 70; i += 10) {
+        for (int i = 50; i <=60; i += 10) {
             for (double localDensity: list) {
                 initialVertex = 0;
                 file << "\n\nTEST->(NUMBER OF VERTICES: " << i << ", DENSITY: " << localDensity << ")\n";
                 generateRandomGraph(i, localDensity);
 
-                for (long &result: results) { // reset of previous data measurements
+                for (long long &result: results) { // reset of previous data measurements
                     result = 0;
                 }
 
@@ -513,7 +446,7 @@ void FSP::measureTime(int numOfTests) {
 
                 file << "adjacency_list: " << results[0] / numOfTests << " [ns]\n";
 
-                for (long &result: results) { // reset of previous data measurements
+                for (long long &result: results) { // reset of previous data measurements
                     result = 0;
                 }
 

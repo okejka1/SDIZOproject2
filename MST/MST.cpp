@@ -239,12 +239,11 @@ void MST::generateRandomGraph(int n, double d){
             do {
                 tryAgain = false;
                 if (randV1 != randV2 &&
-                    adjacency_matrix[randV1][randV2] == -1) {                    // losuje do czasu gdy wylosuja sie dwa rozne
+                    adjacency_matrix[randV1][randV2] == -1) {
 
                     adjacency_matrix[randV1][randV2] = 0;
                     adjacency_matrix[randV2][randV1] = 0;
 
-//                    std::cout << "\n Udalo sie wstawic zero V1: " << randV1 << " V2:" << randV2;
 
                 } else {
                     srand(time(NULL));
@@ -253,13 +252,13 @@ void MST::generateRandomGraph(int n, double d){
                     tryAgain = true;
 
                 }
-            } while (tryAgain);                 // do skutku probuje na nowo wygenerowac krawedzi
+            } while (tryAgain);
         }
 
 
 
 
-        /// po wstawieniu wszystkich "braków krawedzi" wstawiam losowe krawedzi
+        // generating
         for (int x = 0; x < numOfVertices; x++) {
             for (int y = 0; y < x; y++) {
 
@@ -281,23 +280,24 @@ void MST::generateRandomGraph(int n, double d){
                     newNode2->next = adjacency_list[x];
                     adjacency_list[x] = newNode2;
 
-//                    std::cout << "\n Wstawiono V1: " << x << " V2:" << y << " waga:" << randWeight;
+
                 }
             }
 
 
         }
 
-    } else {
+    } else { // generating graph for density <= 0.5
 
-        /// TWORZE STRUKTURY I WYPELNIAM JE PUSTYMI WARTOSCIAMI
+        // initialization of graph representatives
         for (int i = 0; i < numOfVertices; i++) {
-            adjacency_matrix[i] = new int[numOfVertices];             // Tworzenie dwuwymiarowej tablicy - dokladanie drugiego wymiaru
+            adjacency_matrix[i] = new int[numOfVertices];
             adjacency_list[i] = NULL;
             for (int j = 0; j < numOfVertices; j++) {
-                adjacency_matrix[i][j] = 0;                           // ustawiam w macierzy na brak relacji pomiedzy wierzcholkami
+                adjacency_matrix[i][j] = 0;
             }
         }
+        // making sure that of the vertices are connected and there is no isolated vertex in the graph
         for (int i = 0; i < numOfVertices - 1; i++) {
             int randWeight = rand() % 100 + 1;
 
@@ -318,7 +318,7 @@ void MST::generateRandomGraph(int n, double d){
         }
 
 
-        // generating graph for density <= 0.5
+        // generating random Edges with random weights
         for (int i = 0; i < numOfEdges-numOfVertices-1; i++) {
 
             int randWeight = rand() % 100 + 1;

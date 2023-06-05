@@ -19,7 +19,7 @@ public:
         int cost;
 
     };
-    long results[2];
+     long long results[2];
     /*
      result[0] -> Dijkstra's list
      result[1] -> Dijkstra's matrix
