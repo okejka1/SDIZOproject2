@@ -3,64 +3,105 @@ Dijkstra list | Dijkstra matrix
 
 
 TEST->(NUMBER OF VERTICES: 10, DENSITY: 0.2)
-adjacency_list: 9844776 [ns]
-adjacency_matrix: 9911270 [ns]
+adjacency_list: 17526366 [ns]
+adjacency_matrix: 12897058 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 10, DENSITY: 0.6)
-adjacency_list: 8719204 [ns]
-adjacency_matrix: 8896594 [ns]
+adjacency_list: 9039698 [ns]
+adjacency_matrix: 12142710 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 10, DENSITY: 0.99)
-adjacency_list: 7704600 [ns]
-adjacency_matrix: 6488322 [ns]
+adjacency_list: 7844352 [ns]
+adjacency_matrix: 7750448 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 15, DENSITY: 0.2)
+adjacency_list: 14054452 [ns]
+adjacency_matrix: 13400788 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 15, DENSITY: 0.6)
+adjacency_list: 11748080 [ns]
+adjacency_matrix: 11721008 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 15, DENSITY: 0.99)
+adjacency_list: 16626976 [ns]
+adjacency_matrix: 23832398 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 20, DENSITY: 0.2)
-adjacency_list: 17426232 [ns]
-adjacency_matrix: 17687608 [ns]
+adjacency_list: 20354646 [ns]
+adjacency_matrix: 20353666 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 20, DENSITY: 0.6)
-adjacency_list: 15834768 [ns]
-adjacency_matrix: 16366980 [ns]
+adjacency_list: 19106080 [ns]
+adjacency_matrix: 18357636 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 20, DENSITY: 0.99)
-adjacency_list: 15164236 [ns]
-adjacency_matrix: 14989888 [ns]
+adjacency_list: 17936206 [ns]
+adjacency_matrix: 18028744 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 25, DENSITY: 0.2)
+adjacency_list: 24925366 [ns]
+adjacency_matrix: 24807576 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 25, DENSITY: 0.6)
+adjacency_list: 22296898 [ns]
+adjacency_matrix: 22313086 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 25, DENSITY: 0.99)
+adjacency_list: 20486004 [ns]
+adjacency_matrix: 20947412 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 30, DENSITY: 0.2)
-adjacency_list: 31459806 [ns]
-adjacency_matrix: 31917226 [ns]
+adjacency_list: 27765626 [ns]
+adjacency_matrix: 27262118 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 30, DENSITY: 0.6)
-adjacency_list: 25817366 [ns]
-adjacency_matrix: 25960014 [ns]
+adjacency_list: 27889252 [ns]
+adjacency_matrix: 28097898 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 30, DENSITY: 0.99)
-adjacency_list: 31575780 [ns]
-adjacency_matrix: 30844866 [ns]
+adjacency_list: 28773850 [ns]
+adjacency_matrix: 28329840 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 35, DENSITY: 0.2)
+adjacency_list: 33815328 [ns]
+adjacency_matrix: 33812916 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 35, DENSITY: 0.6)
+adjacency_list: 34237986 [ns]
+adjacency_matrix: 33518926 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 35, DENSITY: 0.99)
+adjacency_list: 32051248  [ns]
+adjacency_matrix: 37918216 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 40, DENSITY: 0.2)
-adjacency_list: 33973534 [ns]
-adjacency_matrix: 34281156 [ns]
+adjacency_list: 38178508 [ns]
+adjacency_matrix: 37945022 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 40, DENSITY: 0.6)
-adjacency_list: 40555242 [ns]
-adjacency_matrix: 39730790 [ns]
+adjacency_list: 37068886 [ns]
+adjacency_matrix: 37288516 [ns]
 
 
 TEST->(NUMBER OF VERTICES: 40, DENSITY: 0.99)
-adjacency_list: 32595242 [ns]
-adjacency_matrix: 31898916 [ns]
-
-
-
-
+adjacency_list: 40339424 [ns]
+adjacency_matrix: 40569728 [ns]

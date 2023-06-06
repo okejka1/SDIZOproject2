@@ -270,7 +270,7 @@ void FSP::measureTime(int numOfTests) {
         file << "FSP tests\n";
         file << "Dijkstra list | Dijkstra matrix\n";
         double list[3] = {0.2, 0.6, 0.99};
-        for (int i = 50; i <= 60; i += 10) {
+        for (int i = 10; i <= 40; i += 5) {
             for (double localDensity: list) {
                 initialVertex = 0;
                 file << "\n\nTEST->(NUMBER OF VERTICES: " << i << ", DENSITY: " << localDensity << ")\n";
