@@ -1,0 +1,66 @@
+FSP tests
+Dijkstra list | Dijkstra matrix
+
+
+TEST->(NUMBER OF VERTICES: 10, DENSITY: 0.2)
+adjacency_list: 9844776 [ns]
+adjacency_matrix: 9911270 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 10, DENSITY: 0.6)
+adjacency_list: 8719204 [ns]
+adjacency_matrix: 8896594 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 10, DENSITY: 0.99)
+adjacency_list: 7704600 [ns]
+adjacency_matrix: 6488322 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 20, DENSITY: 0.2)
+adjacency_list: 17426232 [ns]
+adjacency_matrix: 17687608 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 20, DENSITY: 0.6)
+adjacency_list: 15834768 [ns]
+adjacency_matrix: 16366980 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 20, DENSITY: 0.99)
+adjacency_list: 15164236 [ns]
+adjacency_matrix: 14989888 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 30, DENSITY: 0.2)
+adjacency_list: 31459806 [ns]
+adjacency_matrix: 31917226 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 30, DENSITY: 0.6)
+adjacency_list: 25817366 [ns]
+adjacency_matrix: 25960014 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 30, DENSITY: 0.99)
+adjacency_list: 31575780 [ns]
+adjacency_matrix: 30844866 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 40, DENSITY: 0.2)
+adjacency_list: 33973534 [ns]
+adjacency_matrix: 34281156 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 40, DENSITY: 0.6)
+adjacency_list: 40555242 [ns]
+adjacency_matrix: 39730790 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 40, DENSITY: 0.99)
+adjacency_list: 32595242 [ns]
+adjacency_matrix: 31898916 [ns]
+
+
+
+

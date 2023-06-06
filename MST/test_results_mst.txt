@@ -1,0 +1,107 @@
+MST tests
+Prim list | Prim matrix
+
+
+TEST->(NUMBER OF VERTICES: 10, DENSITY: 0.2)
+adjacency_list: 6518304 [ns]
+adjacency_matrix: 6786422 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 10, DENSITY: 0.6)
+adjacency_list: 6834772 [ns]
+adjacency_matrix: 7813820 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 10, DENSITY: 0.99)
+adjacency_list: 5973156 [ns]
+adjacency_matrix: 5053462 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 20, DENSITY: 0.2)
+adjacency_list: 11742106 [ns]
+adjacency_matrix: 11805570 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 20, DENSITY: 0.6)
+adjacency_list: 11015830 [ns]
+adjacency_matrix: 12285480 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 20, DENSITY: 0.99)
+adjacency_list: 12973898 [ns]
+adjacency_matrix: 11580508 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 30, DENSITY: 0.2)
+adjacency_list: 20557440 [ns]
+adjacency_matrix: 21096696 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 30, DENSITY: 0.6)
+adjacency_list: 18289052 [ns]
+adjacency_matrix: 18506740 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 30, DENSITY: 0.99)
+adjacency_list: 17092604 [ns]
+adjacency_matrix: 17122320 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 40, DENSITY: 0.2)
+adjacency_list: 23458470 [ns]
+adjacency_matrix: 23841954 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 40, DENSITY: 0.6)
+adjacency_list: 22735856 [ns]
+adjacency_matrix: 22323178 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 40, DENSITY: 0.99)
+adjacency_list: 21643042 [ns]
+adjacency_matrix: 21688328 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 50, DENSITY: 0.2)
+adjacency_list: 29339460 [ns]
+adjacency_matrix: 29827464 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 50, DENSITY: 0.6)
+adjacency_list: 27954200 [ns]
+adjacency_matrix: 28036668 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 50, DENSITY: 0.99)
+adjacency_list: 27945304 [ns]
+adjacency_matrix: 28039382 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 60, DENSITY: 0.2)
+adjacency_list: 35459538 [ns]
+adjacency_matrix: 35519912 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 60, DENSITY: 0.6)
+adjacency_list: 33472384 [ns]
+adjacency_matrix: 33866476 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 60, DENSITY: 0.99)
+adjacency_list: 33592772 [ns]
+adjacency_matrix: 33492392 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 70, DENSITY: 0.2)
+adjacency_list: 40727896 [ns]
+adjacency_matrix: 40400674 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 70, DENSITY: 0.6)
+adjacency_list: 39798528 [ns]
+adjacency_matrix: 39986734 [ns]
+
+
+TEST->(NUMBER OF VERTICES: 70, DENSITY: 0.99)
+adjacency_list: 39217408 [ns]
+adjacency_matrix: 38877718 [ns]

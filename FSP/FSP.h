@@ -41,9 +41,7 @@ public:
     void printList();
     void listDijkstra();
     void matrixDijkstra();
-
-
-
+    void measureTime(int numOfTests);
 };
 
 

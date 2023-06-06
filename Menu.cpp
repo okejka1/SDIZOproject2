@@ -5,7 +5,7 @@
 
 void Menu::MenuMST() {
 
-    MST mst = * new MST();;
+    MST mst = *new MST();;
     std::string fileName;
     int num;
     double den;
@@ -42,7 +42,7 @@ void Menu::MenuMST() {
             case 2: // generating a random graph
                 std::cout << "Enter number of vertices and density of the graph\n";
                 std::cin >> num >> den;
-                mst.generateRandomGraph(num,den);
+                mst.generateRandomGraph(num, den);
                 mst.printMatrix();
                 mst.printList();
                 break;
@@ -71,7 +71,7 @@ void Menu::MenuMST() {
 
 void Menu::MenuFSP() {
 
-    FSP fsp = * new FSP();
+    FSP fsp = *new FSP();
     std::string fileName;
 
 
@@ -108,7 +108,7 @@ void Menu::MenuFSP() {
             case 2: // generating a random graph
                 std::cout << "Enter number of vertices and density of the graph\n";
                 std::cin >> num >> den;
-                fsp.generateRandomGraph(num,den);
+                fsp.generateRandomGraph(num, den);
                 fsp.printMatrix();
                 fsp.printList();
                 break;
@@ -119,6 +119,7 @@ void Menu::MenuFSP() {
             case 4: // Dijkstra's algorithm
                 fsp.listDijkstra();
                 fsp.matrixDijkstra();
+                break;
             case 5: //
                 fsp.measureTime(50);
                 break;

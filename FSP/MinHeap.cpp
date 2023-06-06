@@ -90,7 +90,7 @@ void MinHeap::decreaseKey(int vertex, int distance) {
 }
 
 bool MinHeap::isEmpty() {
-    if(size == 0)
+    if (size == 0)
         return true;
     else
         return false;
@@ -100,7 +100,7 @@ bool MinHeap::isEmpty() {
 void MinHeap::print() {
     std::cout << "---------\n";
     std::cout << "   Heap\n";
-    for (int i=0; i<size; i++){
+    for (int i = 0; i < size; i++) {
         std::cout << i << ". (" << heap[i].vertex << ", " << heap[i].distance << ")\n";
     }
     std::cout << "---------\n";
@@ -109,16 +109,16 @@ void MinHeap::print() {
 
 void MinHeap::pretty_print() {
     std::cout << "-----\n";
-    for (int i=0; i<size; i++){
+    for (int i = 0; i < size; i++) {
         std::cout << "(" << i << ", " << positions[i] << ") ";
     }
     std::cout << "\n-----\n";
     int power = 0;
     int cnt = 0;
-    for (int i = 0; i < size; i++){
+    for (int i = 0; i < size; i++) {
         std::cout << "(" << heap[i].vertex << ", " << heap[i].distance << ") ";
         cnt++;
-        if (cnt >= pow(2, power)){
+        if (cnt >= pow(2, power)) {
             std::cout << "\n";
             power++;
             cnt = 0;

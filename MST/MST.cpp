@@ -1,5 +1,4 @@
 #include <iomanip>
-#include <queue>
 #include "MST.h"
 #include "../PriorityQueue.h"
 #include "../Timer.h"
@@ -196,7 +195,8 @@ void MST::primMatrix() {
     delete[] visited;
     delete[] mst;
 }
-void MST::generateRandomGraph(int n, double d){
+
+void MST::generateRandomGraph(int n, double d) {
     // input check
     if (n <= 0 || d <= 0 || d > 1) {
         std::cout << "\nINCORRECT INPUT\n";
@@ -214,7 +214,6 @@ void MST::generateRandomGraph(int n, double d){
     adjacency_matrix = new int *[numOfVertices];
 
 
-
     if (d > 0.5) {
 
         for (int i = 0; i < numOfVertices; i++) {
@@ -230,7 +229,6 @@ void MST::generateRandomGraph(int n, double d){
         }
 
 
-        /// LOSUJE PUSTE KRAWEDZI I WSTAWIAM TAM 0
         std::cout << maxEdges << " " << numOfEdges;
         for (int i = 0; i < maxEdges - numOfEdges; i++) {
             int randV1 = rand() % numOfVertices;
@@ -256,8 +254,6 @@ void MST::generateRandomGraph(int n, double d){
         }
 
 
-
-
         // generating
         for (int x = 0; x < numOfVertices; x++) {
             for (int y = 0; y < x; y++) {
@@ -268,13 +264,13 @@ void MST::generateRandomGraph(int n, double d){
                     adjacency_matrix[x][y] = randWeight;
                     adjacency_matrix[y][x] = randWeight;
 
-                    listNode *newNode1 = new listNode;                           // wstawiam do listy
+                    listNode *newNode1 = new listNode;
                     newNode1->cost = randWeight;
                     newNode1->vertex = x;
                     newNode1->next = adjacency_list[y];
                     adjacency_list[y] = newNode1;
 
-                    listNode *newNode2 = new listNode;                           // wstawiam do listy
+                    listNode *newNode2 = new listNode;
                     newNode2->cost = randWeight;
                     newNode2->vertex = y;
                     newNode2->next = adjacency_list[x];
@@ -319,7 +315,7 @@ void MST::generateRandomGraph(int n, double d){
 
 
         // generating random Edges with random weights
-        for (int i = 0; i < numOfEdges-numOfVertices-1; i++) {
+        for (int i = 0; i < numOfEdges - numOfVertices - 1; i++) {
 
             int randWeight = rand() % 100 + 1;
             int randV1 = rand() % numOfVertices;
@@ -328,25 +324,24 @@ void MST::generateRandomGraph(int n, double d){
 
             do {
                 tryAgain = false;
-                if (randV1 != randV2 && adjacency_matrix[randV1][randV2] == 0) {                    // losuje do czasu gdy wylosuja sie dwa rozne
+                if (randV1 != randV2 && adjacency_matrix[randV1][randV2] == 0) {
 
-                    adjacency_matrix[randV1][randV2] = randWeight;         //wstawiam do macierzy
+                    adjacency_matrix[randV1][randV2] = randWeight;
                     adjacency_matrix[randV2][randV1] = randWeight;
 
 
-                    listNode *newNode1 = new listNode;                           // wstawiam do listy
+                    listNode *newNode1 = new listNode;
                     newNode1->cost = randWeight;
                     newNode1->vertex = randV2;
                     newNode1->next = adjacency_list[randV1];
                     adjacency_list[randV1] = newNode1;
 
-                    listNode *newNode2 = new listNode;                           // wstawiam do listy
+                    listNode *newNode2 = new listNode;
                     newNode2->cost = randWeight;
                     newNode2->vertex = randV1;
                     newNode2->next = adjacency_list[randV2];
                     adjacency_list[randV2] = newNode2;
 
-                    std::cout << "\n Wstawiono. V1: " << randV1 << " V2:" << randV2 << " waga:" << randWeight;
 
                 } else {
                     srand(time(NULL));
@@ -355,16 +350,12 @@ void MST::generateRandomGraph(int n, double d){
                     tryAgain = true;
 
                 }
-            } while (tryAgain);                 // do skutku probuje na nowo wygenerowac krawedzi
+            } while (tryAgain);
 
         }
     }
 
-
-    std::cout << "\n\n";
 }
-
-
 
 
 void MST::measureTime(int numOfTests) {
@@ -375,37 +366,37 @@ void MST::measureTime(int numOfTests) {
     if (file.is_open()) {
         file << "MST tests\n";
         file << "Prim list | Prim matrix\n";
-        double list[3] = {0.2,0.6, 0.99};
+        double list[3] = {0.2, 0.6, 0.99};
         for (int i = 10; i <= 70; i += 10) {
-            for (double localDensity : list) {
+            for (double localDensity: list) {
                 file << "\n\nTEST->(NUMBER OF VERTICES: " << i << ", DENSITY: " << localDensity << ")\n";
                 generateRandomGraph(i, localDensity);
 
-                for(long & result : results){ // reset of previous data measurements
+                for (long &result: results) { // reset of previous data measurements
                     result = 0;
                 }
 
 
-                for(int p = 0; p < numOfTests; p++){ // PRIM LIST
+                for (int p = 0; p < numOfTests; p++) { // PRIM LIST
                     timer.startTime();
                     this->primList();
                     timer.stopTime();
                     results[0] += timer.nanoMeasuredTime();
                 }
 
-                file << "adjacency_list: " << results[0]/numOfTests << " [ns]\n";
+                file << "adjacency_list: " << results[0] / numOfTests << " [ns]\n";
 
-                for(long & result : results){ // reset of previous data measurements
+                for (long &result: results) { // reset of previous data measurements
                     result = 0;
                 }
 
-                for(int p  = 0; p < numOfTests; p++){ // PRIM LIST
+                for (int p = 0; p < numOfTests; p++) { // PRIM LIST
                     timer.startTime();
                     this->primMatrix();
                     timer.stopTime();
                     results[1] += timer.nanoMeasuredTime();
                 }
-                file << "adjacency_matrix: " << results[1]/numOfTests << " [ns]\n";
+                file << "adjacency_matrix: " << results[1] / numOfTests << " [ns]\n";
 
             }
 
